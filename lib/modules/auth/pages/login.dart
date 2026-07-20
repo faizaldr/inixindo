@@ -31,16 +31,30 @@ class _LoginPageState extends State<LoginPage> {
               controller: _usernameC,
               labelText: "Username",
               obscureText: false,
+              keyboardType: TextInputType.emailAddress,
+              icon: Icons.email,
             ),
             FormInput(
               controller: _passwordC,
               labelText: "Password",
               obscureText: true,
+              icon: Icons.key,
+              suffixIcon: Icon(Icons.visibility),
+              suffixIcon2: Icon(Icons.visibility_off),
             ),
-
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: actionLogin,
+                label: Text("Login"),
+                icon: Icon(Icons.login),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
+  void actionLogin() {}
 }

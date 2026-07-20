@@ -4,9 +4,10 @@ class FormInput extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   final String? hintText;
-  final bool obscureText;
+  bool obscureText;
   final IconData? icon;
   final Widget? suffixIcon;
+  final Widget? suffixIcon2;
   final TextInputType keyboardType;
 
   FormInput({
@@ -17,6 +18,7 @@ class FormInput extends StatefulWidget {
     this.obscureText = false,
     this.icon,
     this.suffixIcon,
+    this.suffixIcon2,
     this.keyboardType = TextInputType.text,
   }) : super(key: key);
 
@@ -30,7 +32,34 @@ class _FormInputState extends State<FormInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextFormField(obscureText: widget.obscureText,),
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: TextFormField(
+        controller: widget.controller,
+        obscureText: widget.obscureText,
+        keyboardType: widget.keyboardType,
+        decoration: InputDecoration(
+          labelText: widget.labelText,
+          hintText: widget.hintText,
+          prefixIcon: widget.icon != null
+              ? Icon(widget.icon, color: Theme.of(context).primaryColor)
+              : null,
+          suffixIcon: widget.suffixIcon != null
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.obscureText = !widget.obscureText;
+                    });
+                  },
+                  icon: widget.obscureText
+                      ? widget.suffixIcon!
+                      : widget.suffixIcon2!,
+                )
+              : null,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12)
+          )
+        ),
+      ),
     );
   }
 }

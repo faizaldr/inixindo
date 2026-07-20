@@ -56,5 +56,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void actionLogin() {}
+  void actionLogin() {
+    print(_passwordC.text);
+    print(_usernameC.text);
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inixindo/modules/auth/datas/login_api.dart';
 import 'package:inixindo/widgets/forms/form_input.dart';
 
 class LoginPage extends StatefulWidget {
@@ -56,8 +57,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void actionLogin() {
-    print(_passwordC.text);
-    print(_usernameC.text);
+  void actionLogin() async {
+    final identifier = _usernameC.text.trim();
+    final password = _passwordC.text;
+    print(identifier);
+    print(password);
+    final loginResponse = await LoginApi().login(identifier, password);
+    if (loginResponse != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Login Berhasil : ${loginResponse.user!.username}"),
+        ),
+      );
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Login Gagal"),
+        ),
+      );
+    }
   }
 }

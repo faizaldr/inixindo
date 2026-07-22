@@ -38,17 +38,18 @@ class Data {
   String? updatedAt;
   String? publishedAt;
 
-  Data(
-      {this.id,
-        this.documentId,
-        this.placeName,
-        this.placeType,
-        this.comment,
-        this.latitude,
-        this.longitude,
-        this.createdAt,
-        this.updatedAt,
-        this.publishedAt});
+  Data({
+    this.id,
+    this.documentId,
+    this.placeName,
+    this.placeType,
+    this.comment,
+    this.latitude,
+    this.longitude,
+    this.createdAt,
+    this.updatedAt,
+    this.publishedAt,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,8 +57,8 @@ class Data {
     placeName = json['placeName'];
     placeType = json['placeType'];
     comment = json['comment'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+    latitude = (json['latitude'] as num?)?.toDouble();
+    longitude = (json['longitude'] as num?)?.toDouble();
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     publishedAt = json['publishedAt'];

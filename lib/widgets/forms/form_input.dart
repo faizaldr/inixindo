@@ -9,6 +9,7 @@ class FormInput extends StatefulWidget {
   final Widget? suffixIcon;
   final Widget? suffixIcon2;
   final TextInputType keyboardType;
+  final bool isEnabled;
 
   FormInput({
     Key? key,
@@ -20,6 +21,7 @@ class FormInput extends StatefulWidget {
     this.suffixIcon,
     this.suffixIcon2,
     this.keyboardType = TextInputType.text,
+    this.isEnabled = true
   }) : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class _FormInputState extends State<FormInput> {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: TextFormField(
+        enabled: widget.isEnabled,
         controller: widget.controller,
         obscureText: widget.obscureText,
         keyboardType: widget.keyboardType,

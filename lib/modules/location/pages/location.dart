@@ -41,6 +41,9 @@ class _LocationPageState extends State<LocationPage> {
               itemBuilder: (context, index) {
                 var data = _locationModel!.data![index];
                 return InkWell(
+                  onLongPress: () {
+                    actionDelete(data);
+                  },
                   onTap: () {
                     actionDetail(data: data);
                   },
@@ -59,6 +62,44 @@ class _LocationPageState extends State<LocationPage> {
                 );
               },
             ),
+    );
+  }
+
+  void actionDelete(Data data) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Anda akan menghapus ${data.placeName}"),
+        actions: [
+          TextButton(
+            child: Text("Ya"),
+            onPressed: () async {
+              bool success = await LocationApi().deleteLocations(
+                id: data.documentId,
+              );
+              if (success) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Lokasi berhasil dihapus")),
+                );
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LocationPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text("GAGAL dihapus")));
+                Navigator.of(context).pop(true);
+              }
+            },
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: Text("Tidak"),
+          ),
+        ],
+      ),
     );
   }
 

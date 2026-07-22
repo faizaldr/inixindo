@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:inixindo/modules/location/datas/location_api.dart';
 import 'package:inixindo/modules/location/models/location_model.dart';
+import 'package:inixindo/modules/location/services/location_service.dart';
 import 'package:inixindo/widgets/forms/form_input.dart';
+import 'package:location/location.dart';
 
 class LocationFormPage extends StatefulWidget {
   Data? data;
@@ -25,6 +29,7 @@ class _LocationFormPageState extends State<LocationFormPage> {
   void initState() {
     super.initState();
     _initLocationModel();
+    _getCurrentLocation();
   }
 
   void _initLocationModel() async {
@@ -34,6 +39,25 @@ class _LocationFormPageState extends State<LocationFormPage> {
         _placeTypeC.text = widget.data!.placeType!;
         _commentC.text = widget.data!.comment!;
       });
+    }
+  }
+
+  StreamSubscription<LocationData>? _locationSubscription;
+
+  Future<void> _getCurrentLocation() async {
+    final locationService = LocationService();
+    final hasPermission = await locationService.requestPermission();
+    if (hasPermission && mounted) {
+      _locationSubscription = locationService.locationStream.listen(
+        (locData) {
+          if(mounted){
+            setState(() {
+              _latitudeC.text = locData.latitude?.toString() ?? '';
+              _longitudeC.text = locData.longitude?.toString() ?? '';
+            });
+          }
+        },
+      );
     }
   }
 

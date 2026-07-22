@@ -30,6 +30,16 @@ class LocationApi {
     // }
   }
 
+  Future<bool> deleteLocations({String? id}) async {
+    final response = await http.delete(
+      Uri.parse(LOCATION_URL + "/$id"),
+      headers: await getHeaders(),
+    );
+    return response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 204;
+  }
+
   Future<bool> saveLocations({
     String? id,
     required String placeName,

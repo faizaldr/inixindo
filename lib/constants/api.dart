@@ -3,3 +3,6 @@ const String API_URL = BASE_URL + "/api";
 const String AUTH_URL = API_URL + "/auth";
 const String LOGIN_URL = AUTH_URL + "/local";
 const String REGISTER_URL = LOGIN_URL + "/register";
+
+// Trcakings
+const String LOCATION_URL = API_URL + "/trackings";
